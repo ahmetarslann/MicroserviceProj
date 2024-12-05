@@ -1,0 +1,48 @@
+@baseAdress = http://localhost:5129
+@categoryId = 08dd0fbe-70bc-a231-366f-24c837a30000
+@courseId = 08dd1363-38e8-f9cd-0015-5dfe061f0000
+
+GET {{baseAdress}}/api/categories
+Accept: application/json
+
+###
+
+POST {{baseAdress}}/api/categories
+Accept: application/json
+Content-Type: application/json
+{
+  "name":"Astronomi"
+}
+
+###
+
+GET {{baseAdress}}/api/categories/{{categoryId}}
+Accept: application/json
+
+###
+
+POST {{baseAdress}}/api/courses
+Accept: application/json
+Content-Type: application/json
+{
+  "name":"Kurs",
+  "description":"Bu açýklama ilgili kursa aittir.",
+  "price":99.99,
+  "imageUrl":"http://example.com/picture.jpg",
+  "categoryId":"{{categoryId}}"
+}
+
+###
+
+GET {{baseAdress}}/api/courses
+Accept: application/json
+
+###
+
+GET {{baseAdress}}/api/courses/{{courseId}}
+Accept: application/json
+
+###
+
+DELETE {{baseAdress}}/api/courses/{{courseId}}
+Accept: application/json
