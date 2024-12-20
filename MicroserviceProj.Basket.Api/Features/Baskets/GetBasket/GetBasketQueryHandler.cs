@@ -25,6 +25,11 @@ namespace MicroserviceProj.Basket.Api.Features.Baskets.GetBasket
 
             var basket = JsonSerializer.Deserialize<Data.Basket>(basketAsString)!;
 
+            if (!basket.BasketItems.Any())
+            {
+                return ServiceResult<BasketDto>.Error(HttpStatusCode.NotFound, "Basket Item not found.", "Basket Item not found for this basket.");
+            }
+
             var basketDto = mapper.Map<BasketDto>(basket);
 
             return ServiceResult<BasketDto>.SuccessAsOk(basketDto);

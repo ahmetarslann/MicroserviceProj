@@ -1,4 +1,6 @@
-﻿namespace MicroserviceProj.Basket.Api.Data
+﻿using System.Text.Json.Serialization;
+
+namespace MicroserviceProj.Basket.Api.Data
 {
     public class Basket
     {
@@ -20,9 +22,16 @@
         }
 
 
+        [JsonIgnore]
         public bool IsAppliedDiscount => DiscountRate is > 0 && string.IsNullOrEmpty(Coupon);
+
+        [JsonIgnore]
         public decimal TotalPrice => BasketItems.Sum(x => x.Price);
+
+        [JsonIgnore]
         public decimal? TotalPriceWithAppliedDiscount => !IsAppliedDiscount ? null : BasketItems.Sum(x => x.PriceByApplyDiscountRate);
+
+
 
         public void ApplyNewDiscount(string coupon, float discountRate) 
         {
@@ -34,6 +43,11 @@
 
         public void ApplyAvailableDiscount()
         {
+            if (!IsAppliedDiscount)
+            {
+                return;
+            }
+
             foreach (var item in BasketItems)
             {
                 item.PriceByApplyDiscountRate = item.Price * (decimal)(1 - DiscountRate!);

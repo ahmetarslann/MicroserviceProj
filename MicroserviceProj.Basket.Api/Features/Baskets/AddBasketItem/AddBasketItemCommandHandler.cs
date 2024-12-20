@@ -50,6 +50,8 @@ namespace MicroserviceProj.Basket.Api.Features.Baskets.AddBasketItem
                 }
             }
 
+            currentBasket.ApplyAvailableDiscount();
+
             basketAsString = JsonSerializer.Serialize(currentBasket);
 
             await distributedCache.SetStringAsync(cacheKey, basketAsString, token:cancellationToken);
